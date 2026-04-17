@@ -1,0 +1,26 @@
+{
+  "overview": "SRI RAJESWARI OILS AND FOODS (SR Oils And Foods) is a business product showcase and ordering website. Customers can browse a public product catalog, view detailed product pages, add items to a shopping cart, and place orders. The business owner can manage products, fulfil orders, and display the shop address with a map for customers.",
+  "features": [
+    "Public product catalog with search, category filtering, and sorting",
+    "Product detail pages with images and full descriptions",
+    "Shopping cart with quantity controls and checkout form",
+    "Customer accounts with order history via Internet Identity login",
+    "Owner dashboard for order management and status updates",
+    "Owner product management (add, edit, remove, upload images)",
+    "Customer care information and feedback submission",
+    "Customer product ratings",
+    "Shop address display with map and address lines",
+    "Owner shop settings to manage store location and contact info"
+  ],
+  "category": "ecommerce",
+  "tags": [
+    "oils",
+    "foods",
+    "ecommerce",
+    "product-catalog",
+    "ordering",
+    "shop-address",
+    "owner-dashboard"
+  ],
+  "last_updated": "2026-04-17T05:59:08.561Z"
+}

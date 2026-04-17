@@ -1,0 +1,117 @@
+type UserRole = 
+ variant {
+   admin;
+   guest;
+   user;
+ };
+type UpdateProductRequest = 
+ record {
+   category: text;
+   description: text;
+   id: ProductId;
+   imageUrl: text;
+   name: text;
+   price: float64;
+   stock: StockStatus;
+ };
+type Timestamp = int;
+type StockStatus = 
+ variant {
+   available;
+   outOfStock;
+ };
+type SortBy = 
+ variant {
+   newest;
+   priceAsc;
+   priceDesc;
+ };
+type ShopInfo = 
+ record {
+   addressLine1: text;
+   addressLine2: opt text;
+   city: text;
+   latitude: opt float64;
+   longitude: opt float64;
+   name: text;
+   phone: text;
+   pincode: text;
+   state: text;
+ };
+type ProductId = nat;
+type Product = 
+ record {
+   category: text;
+   createdAt: Timestamp;
+   description: text;
+   id: ProductId;
+   imageUrl: text;
+   name: text;
+   price: float64;
+   stock: StockStatus;
+ };
+type OrderStatus = 
+ variant {
+   confirmed;
+   delivered;
+   packed;
+   pending;
+   shipped;
+ };
+type OrderItem = 
+ record {
+   name: text;
+   price: float64;
+   productId: ProductId;
+   qty: nat;
+ };
+type OrderId = nat;
+type Order = 
+ record {
+   address: text;
+   createdAt: Timestamp;
+   customerId: principal;
+   customerName: text;
+   email: text;
+   items: vec OrderItem;
+   orderId: OrderId;
+   phone: text;
+   status: OrderStatus;
+   totalPrice: float64;
+ };
+type CreateProductRequest = 
+ record {
+   category: text;
+   description: text;
+   imageUrl: text;
+   name: text;
+   price: float64;
+   stock: StockStatus;
+ };
+type CreateOrderRequest = 
+ record {
+   address: text;
+   customerName: text;
+   email: text;
+   items: vec OrderItem;
+   phone: text;
+ };
+service : {
+  _initializeAccessControl: () -> ();
+  addProduct: (req: CreateProductRequest) -> (Product);
+  assignCallerUserRole: (user: principal, role: UserRole) -> ();
+  createOrder: (req: CreateOrderRequest) -> (Order);
+  deleteProduct: (id: ProductId) -> (bool);
+  getCallerUserRole: () -> (UserRole) query;
+  getProduct: (id: ProductId) -> (opt Product) query;
+  getShopInfo: () -> (opt ShopInfo) query;
+  isCallerAdmin: () -> (bool) query;
+  listAllOrders: () -> (vec Order) query;
+  listMyOrders: () -> (vec Order) query;
+  listProducts: (category: opt text, search: opt text, sortBy: opt SortBy) ->
+   (vec Product) query;
+  seedProducts: () -> (nat);
+  setShopInfo: (info: ShopInfo) -> ();
+  updateOrderStatus: (orderId: OrderId, status: OrderStatus) -> (bool);
+  updateProduct: (req: UpdateProductRequest) -> (bool);
+}
