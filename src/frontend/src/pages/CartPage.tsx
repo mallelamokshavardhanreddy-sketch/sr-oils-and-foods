@@ -35,7 +35,7 @@ function EmptyCart() {
       <Button
         asChild
         size="lg"
-        className="gap-2 gradient-warm text-primary-foreground"
+        className="gap-2 gradient-earthy text-primary-foreground"
         data-ocid="cart.browse_products_button"
       >
         <Link to="/">
@@ -279,7 +279,7 @@ export default function CartPage() {
                   </div>
 
                   <Button
-                    className="w-full gap-2 gradient-warm text-primary-foreground"
+                    className="w-full gap-2 gradient-earthy text-primary-foreground"
                     size="lg"
                     onClick={() => navigate({ to: "/checkout" })}
                     data-ocid="cart.checkout_button"

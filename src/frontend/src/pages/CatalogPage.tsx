@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Link } from "@tanstack/react-router";
-import { Package, Search, ShoppingCart } from "lucide-react";
+import { Droplets, Package, Search, ShoppingCart } from "lucide-react";
 import { motion } from "motion/react";
 import { useMemo, useState } from "react";
 import { toast } from "sonner";
@@ -20,7 +20,14 @@ import { useCartStore } from "../store/cart";
 import type { Product, SortBy } from "../types";
 import { isInStock } from "../types";
 
-const CATEGORIES = ["All", "Tech", "Home", "Accessories", "Fashion", "Audio"];
+const CATEGORIES = [
+  "All",
+  "Coconut Oil",
+  "Groundnut Oil",
+  "Sesame Oil",
+  "Castor Oil",
+  "Ghee & Foods",
+];
 
 const SORT_OPTIONS = [
   { label: "Newest", value: "newest" },
@@ -31,67 +38,67 @@ const SORT_OPTIONS = [
 const SAMPLE_PRODUCTS: Product[] = [
   {
     id: 1n,
-    name: "Aero Sound Noise-Cancelling Headphones",
+    name: "Cold-Pressed Coconut Oil (500ml)",
     description:
-      "Premium wireless headphones with industry-leading active noise cancellation and 30-hour battery life.",
-    price: 349.99,
-    category: "Tech",
-    imageUrl: "/assets/generated/product-headphones.dim_800x600.jpg",
+      "Extracted from fresh coconuts using traditional wooden press. Rich in lauric acid — ideal for cooking, hair care, and skin nourishment.",
+    price: 320.0,
+    category: "Coconut Oil",
+    imageUrl: "/assets/generated/product-coconut-oil.dim_800x800.jpg",
     stock: { available: null },
     createdAt: BigInt(Date.now()),
   },
   {
     id: 2n,
-    name: "Velvet Tote Bag",
+    name: "Wood-Pressed Groundnut Oil (1 Litre)",
     description:
-      'Hand-crafted cognac leather tote with suede interior lining. Fits 15" laptop with room to spare.',
-    price: 199.99,
-    category: "Accessories",
-    imageUrl: "/assets/generated/product-tote-bag.dim_800x600.jpg",
+      "Stone-mill extracted groundnut oil with full natural aroma. Zero refining, zero chemicals — just pure pressed goodness for everyday cooking.",
+    price: 280.0,
+    category: "Groundnut Oil",
+    imageUrl: "/assets/generated/product-groundnut-oil.dim_800x800.jpg",
     stock: { available: null },
     createdAt: BigInt(Date.now()),
   },
   {
     id: 3n,
-    name: "Smart Home Hub",
+    name: "Cold-Pressed Sesame Oil (250ml)",
     description:
-      "Control all your smart home devices from one elegant anthracite hub. Compatible with 10,000+ devices.",
-    price: 299.99,
-    category: "Tech",
-    imageUrl: "/assets/generated/product-smarthub.dim_800x600.jpg",
+      "Traditional til oil pressed from hand-cleaned sesame seeds. Deep golden colour, nutty aroma — perfect for tempering and Ayurvedic use.",
+    price: 220.0,
+    category: "Sesame Oil",
+    imageUrl: "/assets/generated/product-sesame-oil.dim_800x800.jpg",
     stock: { available: null },
     createdAt: BigInt(Date.now()),
   },
   {
     id: 4n,
-    name: "Serene Linen Throw",
+    name: "Pure Castor Oil (200ml)",
     description:
-      "Hand-woven sage green linen throw blanket. 100% natural fibers, perfect for cozy evenings.",
-    price: 75.0,
-    category: "Home",
-    imageUrl: "/assets/generated/product-linen-throw.dim_800x600.jpg",
+      "Cold-pressed from organically grown castor seeds. Thick, potent, and unrefined — prized for hair growth and skin healing rituals.",
+    price: 180.0,
+    category: "Castor Oil",
+    imageUrl: "/assets/generated/product-castor-oil.dim_800x800.jpg",
     stock: { available: null },
     createdAt: BigInt(Date.now()),
   },
   {
     id: 5n,
-    name: "Obsidian Smartwatch",
+    name: "Wood-Pressed Coconut Oil (1 Litre)",
     description:
-      "Fitness-focused smartwatch with GPS, health monitoring, and 7-day battery. Water resistant to 50m.",
-    price: 499.99,
-    category: "Tech",
-    imageUrl: "/assets/generated/product-smartwatch.dim_800x600.jpg",
+      "Larger family pack of our signature cold-pressed coconut oil. Mild natural fragrance, high smoke point — versatile for both kitchen and wellness.",
+    price: 580.0,
+    category: "Coconut Oil",
+    imageUrl: "/assets/generated/product-coconut-oil-1l.dim_800x800.jpg",
     stock: { available: null },
     createdAt: BigInt(Date.now()),
   },
   {
     id: 6n,
-    name: "Artisan Ceramic Vase Set",
+    name: "A2 Bilona Ghee (500ml)",
     description:
-      "Set of 2 handcrafted ceramic vases in warm off-white. Each piece is unique — signed by the artisan.",
-    price: 120.0,
-    category: "Home",
-    imageUrl: "/assets/generated/product-ceramic-vase.dim_800x600.jpg",
+      "Hand-churned from A2 desi cow milk using the ancient bilona method. Golden, grainy, aromatic — a purity you can taste in every spoonful.",
+    price: 850.0,
+    category: "Ghee & Foods",
+    imageUrl: "/assets/generated/product-bilona-ghee.dim_800x800.jpg",
     stock: { available: null },
     createdAt: BigInt(Date.now()),
   },
@@ -201,7 +208,7 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
 
             <div className="flex items-center justify-between pt-2 mt-auto">
               <span className="font-display font-bold text-lg text-foreground">
-                ${product.price.toFixed(2)}
+                ₹{product.price.toFixed(0)}
               </span>
               <Button
                 size="sm"
@@ -261,11 +268,15 @@ export default function CatalogPage() {
       >
         <div className="relative h-72 md:h-96 w-full">
           <img
-            src="/assets/generated/catalog-hero.dim_1400x500.jpg"
-            alt="Premium product collection"
+            src="/assets/generated/catalog-hero-coldpress.dim_1400x500.jpg"
+            alt="Traditional cold press oil extraction"
             className="w-full h-full object-cover"
+            onError={(e) => {
+              (e.target as HTMLImageElement).src =
+                "/assets/generated/catalog-hero.dim_1400x500.jpg";
+            }}
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-background/85 via-background/55 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-background/90 via-background/60 to-transparent" />
           <div className="absolute inset-0 flex items-center">
             <div className="container mx-auto px-6 md:px-8">
               <motion.div
@@ -275,19 +286,19 @@ export default function CatalogPage() {
                 className="max-w-lg"
               >
                 <Badge className="mb-3 bg-primary/15 text-primary border-0 font-medium text-xs tracking-widest uppercase">
-                  New Collection
+                  Traditional Cold Press
                 </Badge>
-                <h1 className="font-display font-bold text-3xl md:text-5xl text-foreground leading-tight mb-3">
-                  Curated for <span className="text-primary">Exceptional</span>{" "}
-                  Living
+                <h1 className="font-display font-bold text-3xl md:text-5xl text-primary leading-tight mb-3">
+                  Purity of Tradition in{" "}
+                  <span className="text-primary italic">Every Drop</span>
                 </h1>
                 <p className="text-muted-foreground text-sm md:text-base mb-5 leading-relaxed">
-                  Handpicked products blending form, function, and lasting
-                  craftsmanship — delivered to your door.
+                  Cold-pressed using ancient wooden chakku machines. No heat, no
+                  chemicals — just nature's goodness delivered to your door.
                 </p>
                 <Button
                   size="lg"
-                  className="font-semibold gap-2 shadow-md"
+                  className="font-semibold gap-2 shadow-md gradient-earthy text-primary-foreground border-0"
                   onClick={() =>
                     document
                       .getElementById("products-grid")
@@ -295,11 +306,32 @@ export default function CatalogPage() {
                   }
                   data-ocid="catalog.hero_shop_cta"
                 >
-                  <ShoppingCart className="h-4 w-4" />
-                  Shop Now
+                  <Droplets className="h-4 w-4" />
+                  Explore Our Oils
                 </Button>
               </motion.div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Trust strip */}
+      <section className="bg-primary/8 border-y border-primary/15 py-3">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-wrap items-center justify-center gap-6 text-xs text-foreground/70 font-medium">
+            <span className="flex items-center gap-1.5">
+              <span className="text-primary">✦</span> No Chemicals or
+              Preservatives
+            </span>
+            <span className="flex items-center gap-1.5">
+              <span className="text-primary">✦</span> Traditional Wooden Press
+            </span>
+            <span className="flex items-center gap-1.5">
+              <span className="text-primary">✦</span> Single-Origin Seeds
+            </span>
+            <span className="flex items-center gap-1.5">
+              <span className="text-primary">✦</span> Fast Courier Delivery
+            </span>
           </div>
         </div>
       </section>
@@ -314,7 +346,7 @@ export default function CatalogPage() {
             <div className="relative flex-1 max-w-xs">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
               <Input
-                placeholder="Search products…"
+                placeholder="Search oils & foods…"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 className="pl-9 h-9 text-sm bg-background"
@@ -328,7 +360,10 @@ export default function CatalogPage() {
                   key={cat}
                   type="button"
                   onClick={() => setActiveCategory(cat)}
-                  data-ocid={`catalog.category_filter.${cat.toLowerCase()}`}
+                  data-ocid={`catalog.category_filter.${cat
+                    .toLowerCase()
+                    .replace(/\s+/g, "_")
+                    .replace(/[^a-z0-9_]/g, "")}`}
                   className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-smooth border ${
                     activeCategory === cat
                       ? "bg-primary text-primary-foreground border-primary"
@@ -393,7 +428,8 @@ export default function CatalogPage() {
                 No products found
               </h3>
               <p className="text-muted-foreground text-sm max-w-xs mb-6">
-                Try adjusting your search or filters to discover more products.
+                Try adjusting your search or filters to discover more oils and
+                foods.
               </p>
               <Button
                 variant="outline"

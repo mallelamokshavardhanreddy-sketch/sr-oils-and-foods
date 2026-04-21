@@ -76,7 +76,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
               className="flex items-center gap-2 group"
               data-ocid="nav.logo_link"
             >
-              <div className="w-8 h-8 rounded-lg gradient-warm flex items-center justify-center shadow-sm">
+              <div className="w-8 h-8 rounded-lg gradient-earthy flex items-center justify-center shadow-sm">
                 <Store className="h-4 w-4 text-primary-foreground" />
               </div>
               <div className="flex flex-col leading-none">
@@ -190,7 +190,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <div className="container mx-auto px-4 py-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-2">
-              <div className="w-6 h-6 rounded gradient-warm flex items-center justify-center">
+              <div className="w-6 h-6 rounded gradient-earthy flex items-center justify-center">
                 <Store className="h-3 w-3 text-primary-foreground" />
               </div>
               <div className="flex flex-col leading-none">

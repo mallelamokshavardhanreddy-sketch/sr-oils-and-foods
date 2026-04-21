@@ -326,22 +326,22 @@ export default function OwnerDashboardPage() {
             colorClass="bg-primary/10"
           />
           <StatCard
-            icon={<Clock className="h-5 w-5 text-yellow-600" />}
+            icon={<Clock className="h-5 w-5 text-foreground" />}
             label="Pending"
             value={pending}
-            colorClass="bg-yellow-100 dark:bg-yellow-900/20"
+            colorClass="bg-muted"
           />
           <StatCard
-            icon={<Truck className="h-5 w-5 text-blue-600" />}
+            icon={<Truck className="h-5 w-5 text-foreground" />}
             label="Shipped"
             value={shipped}
-            colorClass="bg-blue-100 dark:bg-blue-900/20"
+            colorClass="bg-secondary/50"
           />
           <StatCard
-            icon={<CheckCircle className="h-5 w-5 text-green-600" />}
+            icon={<CheckCircle className="h-5 w-5 text-accent" />}
             label="Delivered"
             value={delivered}
-            colorClass="bg-green-100 dark:bg-green-900/20"
+            colorClass="bg-accent/15"
           />
         </div>
 
